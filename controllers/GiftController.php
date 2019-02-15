@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\UserGift;
 use Yii;
 use app\models\Gift;
 use yii\web\Controller;
@@ -69,7 +70,7 @@ class GiftController extends Controller
             'model' => $model,
         ]);
     }
-    
+
 
     /**
      * Finds the Gift model based on its primary key value.
@@ -85,5 +86,20 @@ class GiftController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionGet($id) {
+        print(Gift::sum($id)); die;
+    }
+
+    public function actionSet($id, $sum) {
+        $model = new UserGift();
+
+        $model->user_id = Yii::$app->user->id;
+        $model->gift_id = $id;
+        $model->gift_value = $sum;
+        $model->timestamp = date('Y-m-d H:i:s');
+
+        $model->save();
     }
 }

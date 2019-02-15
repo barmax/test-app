@@ -46,4 +46,10 @@ class Gift extends \yii\db\ActiveRecord
             'max_value' => 'Максимальное значение',
         ];
     }
+
+    public static function sum($id) {
+        $model = self::findOne(['id' => $id]);
+
+        return mt_rand($model->min_value, $model->max_value);
+    }
 }
