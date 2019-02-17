@@ -19,10 +19,10 @@ class m190214_135740_create_gift_table extends Migration
             'max_value' => $this->integer()->notNull(),
         ]);
 
-        Yii::$app->db->createCommand()->batchInsert('gift', ['name', 'min_value', 'max-value'], [
+        Yii::$app->db->createCommand()->batchInsert('gift', ['name', 'min_value', 'max_value'], [
             ['Деньги', 1, 100],
-            ['Баллы', 1, 100],
             ['Товар', 1, 1],
+            ['Баллы', 1, 100],
         ])->execute();
     }
 

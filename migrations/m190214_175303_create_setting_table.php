@@ -19,10 +19,9 @@ class m190214_175303_create_setting_table extends Migration
         ]);
 
         Yii::$app->db->createCommand()->batchInsert('setting', ['name', 'value'], [
-            ['Курс обмена', 100],
             ['Денежный лимит', 1000],
             ['Лимит товаров', 10],
-            ['Лимит товаров', 5],
+            ['Курс обмена', 100],
         ])->execute();
     }
 

@@ -43,7 +43,6 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Лотерея', 'url' => ['/site/index']],
-//                ['label' => 'Настройки', 'url' => ['/setting/index']],
                 [
                     'label' => 'Настройки',
                     'items' => [
@@ -52,6 +51,7 @@ AppAsset::register($this);
                     ],
                 ],
                 ['label' => 'Пользователи', 'url' => ['/user/list']],
+                ['label' => 'Справка', 'url' => ['/site/faq']],
                 ['label' => 'Личный кабинет', 'url' => ['/user/account']],
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -64,8 +64,6 @@ AppAsset::register($this);
             ],
         ]);
     }
-    NavBar::end();
-    ?>
     NavBar::end();
     ?>
 
