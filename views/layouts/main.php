@@ -43,7 +43,14 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Лотерея', 'url' => ['/site/index']],
-                ['label' => 'Настройки', 'url' => ['/setting/index']],
+//                ['label' => 'Настройки', 'url' => ['/setting/index']],
+                [
+                    'label' => 'Настройки',
+                    'items' => [
+                        ['label' => 'Лимиты', 'url' => '/setting/index'],
+                        ['label' => 'Подарки', 'url' => '/gift/index'],
+                    ],
+                ],
                 ['label' => 'Пользователи', 'url' => ['/user/list']],
                 ['label' => 'Личный кабинет', 'url' => ['/user/account']],
                 '<li>'

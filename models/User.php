@@ -16,13 +16,8 @@ use app\models\UserGift;
  * @property int $is_active
  * @property date $created_at
  */
-
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-
-    public $sum_money;
-    public $sum_points;
-    public $sum_goods;
     public $credit_card;
     public $first_name;
     public $last_name;
@@ -52,11 +47,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
 
-    public static function findByUsername($username) {
+    public static function findByUsername($username)
+    {
         return self::find()->where(['username' => $username])->one();
     }
 
-    public function validatePassword($password) {
+    public function validatePassword($password)
+    {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
 
@@ -107,14 +104,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->getAuthKey() === $authKey;
     }
 
-    public static function getStats($id) {
+    public static function getStats($id)
+    {
 
         return UserGift::find()
             ->select([
                 'user_id' => 'user_id',
                 'sum_money' => '(select sum(gift_value) from user_gift where gift_id = 1)',
-                'sum_points' => '(select sum(gift_value) from user_gift where gift_id = 2)',
-                'sum_goods' => '(select sum(gift_value) from user_gift where gift_id = 3)',
+                'sum_goods' => '(select sum(gift_value) from user_gift where gift_id = 2)',
+                'sum_points' => '(select sum(gift_value) from user_gift where gift_id = 3)',
             ])
             ->where([
                 'user_id' => $id,
@@ -122,46 +120,50 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ->one();
     }
 
-    public static function getSumMoney($id) {
-        $result =  UserGift::find()
+    public static function getSumMoney($id)
+    {
+        $result = UserGift::find()
             ->select([
                 'sum_money' => 'sum(gift_value)',
             ])
             ->where([
                 'user_id' => $id,
-                'gift_id'=> 1,
+                'gift_id' => 1,
             ])
             ->one();
 
         return (int)$result->sum_money;
     }
 
-    public static function getSumGoods($id) {
-        $result =  UserGift::find()
+    public static function getSumGoods($id)
+    {
+        $result = UserGift::find()
             ->select([
                 'sum_goods' => 'sum(gift_value)',
             ])
             ->where([
                 'user_id' => $id,
-                'gift_id'=> 3,
+                'gift_id' => 3,
             ])
             ->one();
 
         return (int)$result->sum_goods;
     }
 
-    public function removeMoney($sum) {
+    public function removeMoney($sum)
+    {
 
         $stats = new UserGift();
         $stats->user_id = $this->id;
         $stats->gift_id = 1;
-        $stats->gift_value = - $sum;
+        $stats->gift_value = -$sum;
         $stats->timestamp = date('Y-m-d H:i:s');
 
         return $stats->save();
     }
 
-    public function addPoints($sum, $exchange) {
+    public function addPoints($sum, $exchange)
+    {
         $stats = new UserGift();
         $stats->user_id = $this->id;
         $stats->gift_id = 2;
@@ -171,13 +173,34 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $stats->save();
     }
 
-    public function removeGoods($sum) {
+    public function removeGoods($sum)
+    {
         $stats = new UserGift();
         $stats->user_id = $this->id;
         $stats->gift_id = 3;
-        $stats->gift_value = - $sum;
+        $stats->gift_value = -$sum;
         $stats->timestamp = date('Y-m-d H:i:s');
 
         return $stats->save();
+    }
+
+    public static function gift()
+    {
+        $gift = Gift::rand();
+        $result['id'] = $gift->id;
+
+        if ($gift->id !== 3) {
+            $userStats = UserGift::findStatsByGiftId($gift->id);
+            $limit = Setting::findOne($gift->id);
+
+            $userMaxGift = $limit->value - $userStats->gift_value;
+            if ($userMaxGift < $gift->max_value) {
+                $result['value'] = mt_rand($gift->min_value, $userMaxGift);
+            }
+        }
+
+        $result['value'] = mt_rand($gift->min_value, $gift->max_value);
+
+        return $result;
     }
 }

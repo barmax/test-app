@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\UserGift;
 use Yii;
 use app\models\forms\SignupForm;
 use app\models\forms\LoginForm;
@@ -9,6 +10,7 @@ use app\models\User;
 use app\models\Setting;
 use yii\data\ActiveDataProvider;
 use app\controllers\behaviors\AccessBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class UserController
@@ -74,6 +76,7 @@ class UserController extends \yii\web\Controller
 
     public function actionAccount() {
         $this->checkAccess();
+
 
         $model = User::getStats(Yii::$app->user->id);
 

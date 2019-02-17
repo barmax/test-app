@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="user-exchange">
     <h1><?= Html::encode($this->title) ?></h1>
-    <p> Курс: 10 баллов = <span id="'exchange-rate"><?= $exchange; ?> денег</span></p>
+    <p> Курс: 1 деньга = <span id="'exchange-rate"><?= $exchange; ?> баллов</span></p>
     <p> Сумма денег: <?= $sumMoney; ?></p>
     <div class="row">
         <div class="col-lg-5">

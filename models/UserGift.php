@@ -43,5 +43,12 @@ class UserGift extends \yii\db\ActiveRecord
         ];
     }
 
-    
+    public function findStatsByGiftId($id)
+    {
+        return self::find()
+            ->select(['gift_value' => 'sum(gift_value)'])
+            ->where(['user_id' => Yii::$app->user->id,
+                'gift_id' => $id])
+            ->one();
+    }
 }

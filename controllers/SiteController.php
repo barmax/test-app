@@ -10,6 +10,7 @@ use yii\web\Response;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\controllers\behaviors\AccessBehavior;
+use  app\models\User;
 
 class SiteController extends Controller
 {
@@ -35,7 +36,13 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->checkAccess();
-        return $this->render('index');
+
+        $gift = User::gift();
+
+//        var_dump($gift);
+        return $this->render('index',[
+            'gift' => $gift,
+        ]);
     }
 
 

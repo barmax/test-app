@@ -47,9 +47,24 @@ class Gift extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function sum($id) {
-        $model = self::findOne(['id' => $id]);
 
-        return mt_rand($model->min_value, $model->max_value);
+
+    public static function userStats($id) {
+        return UserGift::find()
+            ->select([
+                'gift_value' => 'sum(gift_value)'
+            ])
+            ->where([
+                'user_id' => Yii::$app->user->id,
+                'gift_id' => $id
+            ])
+            ->one();
+    }
+
+    public static function rand() {
+        return self::find()
+            ->orderBy('rand()')
+            ->limit(1)
+            ->one();
     }
 }

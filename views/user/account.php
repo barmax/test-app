@@ -22,13 +22,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Отправить товар', ['user/post'], ['class' => 'btn btn-default']) ?>
     </p>
 
-    <?= DetailView::widget([
+
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'sum_money',
-            'sum_points',
             'sum_goods',
-        ],
+            'sum_points',
+        ]
     ]) ?>
 
 

@@ -123,7 +123,7 @@ a.desc:after {
 .gift {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-content: center;
     margin-bottom: 10px;
 }
@@ -150,7 +150,7 @@ a.desc:after {
     margin-bottom: 20px;
 }
 .gift__item--sum {
-    display: none;
+    /*display: none;*/
     font-weight: bold;
     font-size: 1.5em;
     margin-bottom: 0;
@@ -160,7 +160,12 @@ a.desc:after {
     border: 5px solid #449d44;
     border-radius: 15px;
 }
-
+.gift__btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
 .gift__btn {
     display: none;
     padding: 20px;

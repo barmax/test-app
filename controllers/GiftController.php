@@ -7,25 +7,19 @@ use Yii;
 use app\models\Gift;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use app\controllers\behaviors\AccessBehavior;
 
 /**
  * GiftController implements the CRUD actions for Gift model.
  */
 class GiftController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
+            'access' => [
+                'class' => AccessBehavior::className(),
             ],
         ];
     }
@@ -88,9 +82,6 @@ class GiftController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    public function actionGet($id) {
-        print(Gift::sum($id)); die;
-    }
 
     public function actionSet($id, $sum) {
         $model = new UserGift();
@@ -102,4 +93,5 @@ class GiftController extends Controller
 
         $model->save();
     }
+
 }

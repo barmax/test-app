@@ -41,7 +41,7 @@ class Setting extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Имя',
-            'value' => 'Зачение',
+            'value' => 'Значение',
         ];
     }
 }
