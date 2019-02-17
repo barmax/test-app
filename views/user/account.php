@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Получить деньги', ['user/get-money'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('Обмен денег на баллы', ['user/exchange'], ['class' => 'btn btn-success']) ?>
 
-        <?= Html::a('Отправить товар', ['user/post'], ['class' => 'btn btn-default']) ?>
+        <?= Html::a('Отправить товар', ['user/delivery'], ['class' => 'btn btn-default']) ?>
     </p>
 
 

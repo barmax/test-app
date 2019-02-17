@@ -128,7 +128,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ])
             ->where([
                 'user_id' => $id,
-                'gift_id' => 1,
+                'gift_id' => 2,
             ])
             ->one();
 
@@ -143,18 +143,18 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ])
             ->where([
                 'user_id' => $id,
-                'gift_id' => 3,
+                'gift_id' => 2,
             ])
             ->one();
 
         return (int)$result->sum_goods;
     }
 
-    public function removeMoney($sum)
+    public static function removeMoney($sum)
     {
 
         $stats = new UserGift();
-        $stats->user_id = $this->id;
+        $stats->user_id = Yii::$app->user->id;
         $stats->gift_id = 1;
         $stats->gift_value = -$sum;
         $stats->timestamp = date('Y-m-d H:i:s');
@@ -165,19 +165,19 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function addPoints($sum, $exchange)
     {
         $stats = new UserGift();
-        $stats->user_id = $this->id;
-        $stats->gift_id = 2;
+        $stats->user_id = Yii::$app->user->id;
+        $stats->gift_id = 3;
         $stats->gift_value = $sum * $exchange;
         $stats->timestamp = date('Y-m-d H:i:s');
 
         return $stats->save();
     }
 
-    public function removeGoods($sum)
+    public static function removeGoods($sum)
     {
         $stats = new UserGift();
-        $stats->user_id = $this->id;
-        $stats->gift_id = 3;
+        $stats->user_id = Yii::$app->user->id;
+        $stats->gift_id = 2;
         $stats->gift_value = -$sum;
         $stats->timestamp = date('Y-m-d H:i:s');
 

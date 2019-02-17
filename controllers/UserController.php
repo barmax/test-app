@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\forms\CreditCardForm;
+use app\models\forms\DeliveryFrom;
 use app\models\UserGift;
 use Yii;
 use app\models\forms\SignupForm;
@@ -10,7 +12,7 @@ use app\models\User;
 use app\models\Setting;
 use yii\data\ActiveDataProvider;
 use app\controllers\behaviors\AccessBehavior;
-use yii\helpers\ArrayHelper;
+
 
 /**
  * Class UserController
@@ -90,7 +92,7 @@ class UserController extends \yii\web\Controller
         $this->checkAccess();
 
         $sumMoney = User::getSumMoney(Yii::$app->user->id);
-        $model = User::findOne(Yii::$app->user->id);
+        $model = new CreditCardForm();
 
         if ($sumMoney === 0) {
             Yii::$app->session->setFlash('error', 'Нет денег для отправки.');
@@ -98,7 +100,7 @@ class UserController extends \yii\web\Controller
         }
 
         if (Yii::$app->request->post()) {
-            $model->removeMoney($sumMoney);
+            User::removeMoney($sumMoney);
             Yii::$app->session->setFlash('success', "Ваши деньги отправлены.");
 
             return $this->redirect('account');
@@ -109,11 +111,11 @@ class UserController extends \yii\web\Controller
         ]);
     }
 
-    function actionPost() {
+    function actionDelivery() {
         $this->checkAccess();
 
         $sumGoods = User::getSumGoods(Yii::$app->user->id);
-        $model = User::findOne(Yii::$app->user->id);
+        $model = new DeliveryFrom();
 
         if ($sumGoods === 0) {
             Yii::$app->session->setFlash('error', 'Нечего отправлять.');
@@ -122,12 +124,12 @@ class UserController extends \yii\web\Controller
 
         if (Yii::$app->request->post()) {
             Yii::$app->session->setFlash('success', "Ваши товары переданы в доставку.");
-            $model->removeGoods($sumGoods);
+            User::removeGoods($sumGoods);
 
             return $this->redirect('account');
         }
 
-        return $this->render('post', [
+        return $this->render('delivery', [
             'sumGoods' => $sumGoods,
             'model' => $model,
         ]);

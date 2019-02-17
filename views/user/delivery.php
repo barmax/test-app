@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin(['id' => 'user-get-money']); ?>
             <?= $form->field($model, 'first_name')->textInput(['autofocus' => true, 'maxlength' => 16])->label('Имя') ?>
             <?= $form->field($model, 'last_name')->textInput(['autofocus' => true, 'maxlength' => 16])->label('Фамилия') ?>
-            <?= $form->field($model, 'addresses')->textInput(['autofocus' => true, 'maxlength' => 16])->label('Адрес') ?>
+            <?= $form->field($model, 'address')->textInput(['autofocus' => true, 'maxlength' => 16])->label('Адрес') ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Доставить', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
