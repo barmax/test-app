@@ -5,11 +5,23 @@ namespace app\controllers;
 use Yii;
 use app\models\Setting;
 use yii\data\ActiveDataProvider;
+use app\controllers\behaviors\AccessBehavior;
 
 class SettingController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessBehavior::className(),
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
+        $this->checkAccess();
+
         $dataProvider = new ActiveDataProvider([
             'query' => Setting::find(),
         ]);
@@ -21,6 +33,8 @@ class SettingController extends \yii\web\Controller
 
     public function actionUpdate($id)
     {
+        $this->checkAccess();
+
         $model = Setting::findOne($id);
 
         if ($model->load(Yii::$app->request->post())) {

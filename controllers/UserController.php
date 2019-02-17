@@ -6,9 +6,9 @@ use Yii;
 use app\models\forms\SignupForm;
 use app\models\forms\LoginForm;
 use app\models\User;
-use app\models\UserGift;
 use app\models\Setting;
 use yii\data\ActiveDataProvider;
+use app\controllers\behaviors\AccessBehavior;
 
 /**
  * Class UserController
@@ -16,8 +16,18 @@ use yii\data\ActiveDataProvider;
  */
 class UserController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessBehavior::className(),
+            ],
+        ];
+    }
 
     public function actionList() {
+        $this->checkAccess();
+
         $dataProvider = new ActiveDataProvider([
             'query' => User::find(),
         ]);
@@ -63,6 +73,8 @@ class UserController extends \yii\web\Controller
 
 
     public function actionAccount() {
+        $this->checkAccess();
+
         $model = User::getStats(Yii::$app->user->id);
 
         return $this->render('account', [
@@ -72,6 +84,8 @@ class UserController extends \yii\web\Controller
 
 
     function actionGetMoney() {
+        $this->checkAccess();
+
         $sumMoney = User::getSumMoney(Yii::$app->user->id);
         $model = User::findOne(Yii::$app->user->id);
 
@@ -93,6 +107,7 @@ class UserController extends \yii\web\Controller
     }
 
     function actionPost() {
+        $this->checkAccess();
 
         $sumGoods = User::getSumGoods(Yii::$app->user->id);
         $model = User::findOne(Yii::$app->user->id);
@@ -116,6 +131,7 @@ class UserController extends \yii\web\Controller
     }
 
     function actionExchange() {
+        $this->checkAccess();
 
         $exchange = Setting::findOne(1);
         $sumMoney = User::getSumMoney(Yii::$app->user->id);

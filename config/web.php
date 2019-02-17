@@ -54,7 +54,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
-                'about' => 'site/about',
+                'guest' => 'site/guest',
                 [
                     'class' => \yii\rest\UrlRule::class,
                     'controller' => ['api'],
