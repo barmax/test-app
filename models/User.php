@@ -193,9 +193,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             $userStats = UserGift::findStatsByGiftId($gift->id);
             $limit = Setting::findOne($gift->id);
 
-            $userMaxGift = $limit->value - $userStats->gift_value;
-            if ($userMaxGift < $gift->max_value) {
-                $result['value'] = mt_rand($gift->min_value, $userMaxGift);
+            if ($gift->max_value + $userStats->gift_value > $limit->value) {
+                $result['value'] = mt_rand($gift->min_value, ($limit->value - $userStats->gift_value));
             }
         }
 
