@@ -59,8 +59,11 @@ class SiteController extends Controller
     }
 
 
-
     public function actionGuest() {
         return $this->render('guest');
+    }
+
+    public function actionFaq() {
+        return $this->render('faq');
     }
 }
